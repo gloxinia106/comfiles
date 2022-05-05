@@ -41,5 +41,11 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
+
+ipcMain.on("click-local-file", (event) => {
+  dialog.showOpenDialog({ properties: ["openDirectory"] }).then((folder) => {
+    event.sender.send("folder-path", folder.filePaths);
+  });
+});
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.

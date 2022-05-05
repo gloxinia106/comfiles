@@ -8,6 +8,9 @@
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "start": "npm run build && electron ./dist/main.js"
   },
+  "_moduleAliases":{
+    "@src":"./dist/utility"
+  },
   "keywords": [
     "Electron",
     "quick",
@@ -23,6 +26,7 @@
     "@typescript-eslint/parser": "^4.33.0",
     "electron": "^18.1.0",
     "eslint": "^7.32.0",
+    "module-alias": "^2.2.2",
     "typescript": "^4.5.5"
   },
   "dependencies": {}
