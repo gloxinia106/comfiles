@@ -1,3 +1,4 @@
+import { ADD_FOLDER, LOCAL_FOLDER } from "./utility/constant";
 import { app, BrowserWindow, dialog, ipcMain } from "electron";
 import * as path from "path";
 
@@ -42,10 +43,16 @@ app.on("window-all-closed", () => {
   }
 });
 
-ipcMain.on("click-local-file", (event) => {
-  dialog.showOpenDialog({ properties: ["openDirectory"] }).then((folder) => {
-    event.sender.send("folder-path", folder.filePaths);
-  });
+ipcMain.on("click-local-folder", (event, check, multiSelections) => {
+  dialog
+    .showOpenDialog({ properties: ["openDirectory", multiSelections] })
+    .then((folder) => {
+      if (check == LOCAL_FOLDER) {
+        event.sender.send("local-folder-path", folder.filePaths);
+      } else if (check == ADD_FOLDER) {
+        event.sender.send("add-folder-path", folder.filePaths);
+      }
+    });
 });
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
