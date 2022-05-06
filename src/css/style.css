@@ -1,0 +1,103 @@
+@import "reset.css";
+
+body {
+  margin: 30px;
+}
+
+.local-folder-name {
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-size: larger;
+}
+
+.container {
+  display: flex;
+}
+
+.local-folder {
+  width: 70%;
+  border-radius: 5px;
+  margin-right: 10px;
+  border: 1px solid gray;
+  padding: 10px 15px;
+}
+
+.local-folder-btn {
+  padding: 10px 10px;
+  background-color: gray;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.folders-name {
+  font-weight: 600;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-size: larger;
+}
+
+.folders-container {
+  border: 1px solid gray;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  justify-content: center;
+  align-items: center;
+}
+
+.folder-icon-container {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.plus-folder-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.start-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.start-btn {
+  margin-top: 50px;
+  border: none;
+  padding: 5px 0px;
+  width: 75%;
+  border-radius: 10px;
+  background-color: rgb(0, 162, 255);
+  color: white;
+  font-size: 30px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.folder-delete-btn {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  right: 10px;
+  border: none;
+  width: 25px;
+  height: 25px;
+  background-color: black;
+  cursor: pointer;
+}
+
+.delete-folder-icon {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.plus-folder {
+  cursor: pointer;
+}

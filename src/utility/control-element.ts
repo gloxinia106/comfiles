@@ -18,10 +18,12 @@ export const addDirElement = (
       const folderSvgElem = document.createElementNS(xmlns, "svg");
       folderSvgElem.setAttributeNS(null, "viewBox", "0 0 20 20");
       folderSvgElem.setAttributeNS(null, "fill", "currentColor");
+      folderSvgElem.setAttributeNS(null, "class", "plus-folder-icon");
 
       const xSvgElem = document.createElementNS(xmlns, "svg");
       xSvgElem.setAttributeNS(null, "viewBox", "0 0 20 20");
       xSvgElem.setAttributeNS(null, "fill", "currentColor");
+      xSvgElem.setAttributeNS(null, "class", "delete-folder-icon");
 
       // draw folder
       const folderCoords =
