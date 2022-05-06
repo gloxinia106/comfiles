@@ -43,7 +43,7 @@ app.on("window-all-closed", () => {
   }
 });
 
-ipcMain.on("click-local-folder", (event, check, multiSelections) => {
+ipcMain.on("select-folder", (event, check, multiSelections) => {
   dialog
     .showOpenDialog({ properties: ["openDirectory", multiSelections] })
     .then((folder) => {

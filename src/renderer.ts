@@ -1,51 +1,52 @@
 import "module-alias/register";
 import * as fs from "fs";
-import { ipcRenderer } from "electron";
 import * as path from "path";
+import { ipcRenderer } from "electron";
 import { addDirElement } from "@src/control-element";
-import { ADD_FOLDER, LOCAL_FOLDER } from "@src/constant";
 import { sortArray } from "@src/tools";
+import { ADD_FOLDER, LOCAL_FOLDER } from "@src/constant";
 
-const localFolderPath: HTMLDivElement = document.querySelector(".local-folder");
-const localFolderBtn: HTMLButtonElement =
+const localFolderElement: HTMLDivElement =
+  document.querySelector(".local-folder");
+const localFolderBtnElement: HTMLButtonElement =
   document.querySelector(".local-folder-btn");
-const conbineContainer: HTMLDivElement = document.querySelector(
-  ".conbine-folders-container"
-);
-const addFolder: HTMLDivElement = document.querySelector(".add-folder");
+const foldersContainerElement: HTMLDivElement =
+  document.querySelector(".folders-container");
+const plusFolderElement: HTMLDivElement =
+  document.querySelector(".plus-folder");
 
-let savedLocalPath = __dirname;
-let localFoldersPath: string[] = [];
+let destLocalPath = __dirname;
+let foldersPath: string[] = [];
 
-localFolderPath.innerText = __dirname;
+localFolderElement.innerText = __dirname;
 
-localFolderBtn.addEventListener("click", onClickLocalFolderBtn);
+localFolderBtnElement.addEventListener("click", onClickLocalFolderBtnElement);
 
-function onClickLocalFolderBtn() {
-  ipcRenderer.send("click-local-folder", LOCAL_FOLDER);
+function onClickLocalFolderBtnElement() {
+  ipcRenderer.send("select-folder", LOCAL_FOLDER);
 }
 
-ipcRenderer.on("local-folder-path", (_, folderPaths) => {
-  localFolderPath.innerText = folderPaths[0];
-  savedLocalPath = folderPaths[0];
+ipcRenderer.on("local-folder-path", (_, paths) => {
+  localFolderElement.innerText = paths[0];
+  destLocalPath = paths[0];
 });
 
-addFolder.addEventListener("click", onClickAddFolder);
+plusFolderElement.addEventListener("click", onClickplusFolderElement);
 
-function onClickAddFolder() {
-  ipcRenderer.send("click-local-folder", ADD_FOLDER, "multiSelections");
+function onClickplusFolderElement() {
+  ipcRenderer.send("select-folder", ADD_FOLDER, "multiSelections");
 }
 
-ipcRenderer.on("add-folder-path", (_, folderPaths) => {
-  folderPaths.forEach((folderPath: string) => {
-    localFoldersPath.push(folderPath);
+ipcRenderer.on("add-folder-path", (_, paths) => {
+  paths.forEach((path: string) => {
+    foldersPath.push(path);
   });
-  localFoldersPath = sortArray(localFoldersPath);
-  addDirElement(localFoldersPath, conbineContainer);
+  foldersPath = sortArray(foldersPath);
+  addDirElement(foldersPath, foldersContainerElement);
   deleteBtnControl();
 });
 
-conbineContainer.addEventListener("drop", (event) => {
+foldersContainerElement.addEventListener("drop", (event) => {
   event.preventDefault();
   event.stopPropagation();
 
@@ -57,31 +58,29 @@ conbineContainer.addEventListener("drop", (event) => {
       }
     })
     .filter(Boolean);
-  localFoldersPath = [...localFoldersPath, ...dirPaths];
-  localFoldersPath = sortArray(localFoldersPath);
-  addDirElement(localFoldersPath, conbineContainer);
+  foldersPath = [...foldersPath, ...dirPaths];
+  foldersPath = sortArray(foldersPath);
+  addDirElement(foldersPath, foldersContainerElement);
   deleteBtnControl();
 });
 
-conbineContainer.addEventListener("dragover", (e) => {
+foldersContainerElement.addEventListener("dragover", (e) => {
   e.preventDefault();
   e.stopPropagation();
 });
 
 const deleteBtnControl = () => {
   const deleteBtns = document.querySelectorAll(".folder-delete-btn");
-  deleteBtns.forEach((folder) => {
-    folder.addEventListener("click", (e) => {
-      const deletedFolders = localFoldersPath.filter((folderPath) => {
+  deleteBtns.forEach((deleteBtn) => {
+    deleteBtn.addEventListener("click", (e) => {
+      const deletedFolders = foldersPath.filter((folderPath) => {
         const spanFolderName = (<Element>e.target).nextElementSibling
           .nextElementSibling.textContent;
         const arrayFolderName = path.basename(path.normalize(folderPath));
-        console.log(spanFolderName);
         return spanFolderName !== arrayFolderName;
       });
-      localFoldersPath = deletedFolders;
-      console.log(localFoldersPath);
-      folder.parentElement.remove();
+      foldersPath = deletedFolders;
+      deleteBtn.parentElement.remove();
     });
   });
 };
