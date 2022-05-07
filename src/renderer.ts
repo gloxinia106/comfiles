@@ -23,22 +23,18 @@ let foldersPath: string[] = [];
 
 localFolderElement.innerText = __dirname;
 
-localFolderBtnElement.addEventListener("click", onClickLocalFolderBtnElement);
-
-function onClickLocalFolderBtnElement() {
+localFolderBtnElement.addEventListener("click", () => {
   ipcRenderer.send("select-folder", LOCAL_FOLDER);
-}
+});
 
 ipcRenderer.on("local-folder-path", (_, paths) => {
   localFolderElement.innerText = paths[0];
   destLocalPath = paths[0];
 });
 
-plusFolderElement.addEventListener("click", onClickplusFolderElement);
-
-function onClickplusFolderElement() {
+plusFolderElement.addEventListener("click", () => {
   ipcRenderer.send("select-folder", ADD_FOLDER, "multiSelections");
-}
+});
 
 ipcRenderer.on("add-folder-path", (_, paths) => {
   paths.forEach((path: string) => {
