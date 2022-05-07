@@ -5,6 +5,7 @@ import { ipcRenderer } from "electron";
 import { addDirElement } from "@src/control-element";
 import { sortArray } from "@src/tools";
 import { ADD_FOLDER, LOCAL_FOLDER } from "@src/constant";
+import { startBtn } from "@src/process";
 
 const localFolderElement: HTMLDivElement =
   document.querySelector(".local-folder");
@@ -14,6 +15,8 @@ const foldersContainerElement: HTMLDivElement =
   document.querySelector(".folders-container");
 const plusFolderElement: HTMLDivElement =
   document.querySelector(".plus-folder");
+
+const startBtnElement: HTMLButtonElement = document.querySelector(".start-btn");
 
 let destLocalPath = __dirname;
 let foldersPath: string[] = [];
@@ -42,7 +45,7 @@ ipcRenderer.on("add-folder-path", (_, paths) => {
     foldersPath.push(path);
   });
   foldersPath = sortArray(foldersPath);
-  addDirElement(foldersPath, foldersContainerElement);
+  addDirElement(paths, foldersContainerElement);
   deleteBtnControl();
 });
 
@@ -60,13 +63,17 @@ foldersContainerElement.addEventListener("drop", (event) => {
     .filter(Boolean);
   foldersPath = [...foldersPath, ...dirPaths];
   foldersPath = sortArray(foldersPath);
-  addDirElement(foldersPath, foldersContainerElement);
+  addDirElement(dirPaths, foldersContainerElement);
   deleteBtnControl();
 });
 
 foldersContainerElement.addEventListener("dragover", (e) => {
   e.preventDefault();
   e.stopPropagation();
+});
+
+startBtnElement.addEventListener("click", () => {
+  startBtn(destLocalPath, foldersPath);
 });
 
 const deleteBtnControl = () => {

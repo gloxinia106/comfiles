@@ -40,6 +40,7 @@ body {
 }
 
 .folders-container {
+  padding: 20px;
   border: 1px solid gray;
   border-radius: 5px;
   display: grid;
@@ -50,6 +51,7 @@ body {
 
 .folder-icon-container {
   display: flex;
+  flex-direction: column;
   position: relative;
   justify-content: center;
   align-items: center;
@@ -96,6 +98,7 @@ body {
   width: 20px;
   height: 20px;
   color: white;
+  pointer-events: none;
 }
 
 .plus-folder {
