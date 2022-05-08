@@ -41,7 +41,8 @@ ipcRenderer.on("add-folder-path", (_, paths) => {
     foldersPath.push(path);
   });
   foldersPath = sortArray(foldersPath);
-  addDirElement(paths, foldersContainerElement);
+  const sortedPaths = sortArray(paths);
+  addDirElement(sortedPaths, foldersContainerElement);
   deleteBtnControl();
 });
 
@@ -59,7 +60,8 @@ foldersContainerElement.addEventListener("drop", (event) => {
     .filter(Boolean);
   foldersPath = [...foldersPath, ...dirPaths];
   foldersPath = sortArray(foldersPath);
-  addDirElement(dirPaths, foldersContainerElement);
+  const sortedDirPaths = sortArray(dirPaths);
+  addDirElement(sortedDirPaths, foldersContainerElement);
   deleteBtnControl();
 });
 
@@ -70,6 +72,7 @@ foldersContainerElement.addEventListener("dragover", (e) => {
 
 startBtnElement.addEventListener("click", () => {
   startBtn(destLocalPath, foldersPath);
+  window.alert("완료했습니다!");
 });
 
 const deleteBtnControl = () => {

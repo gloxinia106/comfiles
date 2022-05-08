@@ -2,14 +2,22 @@
   "name": "comfiles",
   "version": "1.0.0",
   "description": "files combine one directory",
+  "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron --trace-warnings ./dist/main.js"
+    "start": "npm run build && electron --trace-warnings ./dist/main.js",
+    "publish": "npm run build && electron-packager ./ --platform=win32"
   },
-  "_moduleAliases": {
-    "@src": "./dist/utility"
+  "build": {
+    "asar": false,
+    "files": [
+      "dist/**/*",
+      "package.json",
+      "index.html",
+      "src/css/**/*"
+    ]
   },
   "keywords": [
     "Electron",
@@ -19,17 +27,21 @@
     "demo",
     "typescript"
   ],
+  "_moduleAliases": {
+    "@src": "./dist/utility"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "electron": "^18.1.0",
+    "electron-builder": "^23.0.3",
+    "electron-packager": "^15.5.1",
     "eslint": "^7.32.0",
-    "module-alias": "^2.2.2",
     "typescript": "^4.5.5"
   },
   "dependencies": {
-    "sort-array": "^4.1.5"
+    "module-alias": "^2.2.2"
   }
 }
